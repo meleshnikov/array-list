@@ -1,6 +1,7 @@
 package org.example.list;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class CustomArrayList<E> implements CustomList<E> {
@@ -137,8 +138,17 @@ public class CustomArrayList<E> implements CustomList<E> {
     }
 
     @Override
-    public boolean equals(CustomList otherList) {
-        return false;
+    public boolean equals(CustomArrayList<E> otherList) {
+        boolean equal = false;
+        final int s = size;
+        if (equal = (s == otherList.size())) {
+            for (int i = 0; i < s; i++) {
+                if (!Objects.equals(data[i], otherList.data[i])) {
+                    return false;
+                }
+            }
+        }
+        return equal;
     }
 
     @Override
@@ -168,6 +178,52 @@ public class CustomArrayList<E> implements CustomList<E> {
         return arr;
     }
 
+    private static void swap(Object[] arr, int a, int b) {
+        Object t = arr[a];
+        arr[a] = arr[b];
+        arr[b] = t;
+    }
+
+    private boolean less(Object o1, Object o2, Comparator<? super E> c) {
+        return c.compare((E) o1, (E) o2) < 0;
+    }
+
+    public void bubbleSort(Comparator<? super E> c) {
+        boolean isSorted = false;
+        for (int i = 0; i < size - 1 && !isSorted; i++) {
+            isSorted = true;
+            for (int j = 1; j < size - i; j++) {
+                if (less(data[j], data[j - 1], c)) {
+                    swap(data, j, j - 1);
+                    isSorted = false;
+                }
+            }
+        }
+    }
+
+    public void insertionSort(Comparator<? super E> c) {
+        for (int i = 1; i < size; i++) {
+            Object key = data[i];
+            int j = i - 1;
+            for (; j >= 0 && less(key, data[j], c); j--) {
+                data[j + 1] = data[j];
+            }
+            data[j + 1] = key;
+        }
+    }
+
+    public void selectionSort(Comparator<? super E> c) {
+        for (int i = 0; i < size; i++) {
+            int min = i;
+            for (int j = i + 1; j < size; j++) {
+                if (less(data[j], data[min], c)) {
+                    min = j;
+                }
+            }
+            swap(data, i, min);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(size);
@@ -181,4 +237,11 @@ public class CustomArrayList<E> implements CustomList<E> {
         sb.append("]");
         return sb.toString();
     }
+
+//    public CustomArrayList<?> copy() {
+//        CustomArrayList<?> list = new CustomArrayList<>(size);
+//        list.data = Arrays.copyOf(data, size);
+//        list.size = size;
+//        return list;
+//    }
 }

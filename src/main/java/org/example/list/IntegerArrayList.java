@@ -1,4 +1,5 @@
 package org.example.list;
 
-public class IntegerArrayList<Integer> extends CustomArrayList<Integer> {
+public class IntegerArrayList extends CustomArrayList<Integer> {
+
 }

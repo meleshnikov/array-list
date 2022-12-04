@@ -1,4 +1,4 @@
 package org.example.list;
 
-public class StringArrayList<String> extends CustomArrayList<java.lang.String> {
+public class StringArrayList extends CustomArrayList<java.lang.String> {
 }

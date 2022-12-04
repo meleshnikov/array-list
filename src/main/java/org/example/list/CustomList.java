@@ -60,7 +60,7 @@ public interface CustomList<E> {
     // Сравнить текущий список с другим.
     // Вернуть true/false или исключение,
     // если передан null.
-    boolean equals(CustomList otherList);
+    boolean equals(CustomArrayList<E> otherList);
 
     // Вернуть фактическое количество элементов.
     int size();
