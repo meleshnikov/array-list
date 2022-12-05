@@ -8,25 +8,24 @@ import java.util.Random;
 
 public class Main {
 
-    private static final int SIZE = 100;
+    private static final int SIZE = 10_000;
     private static final int MIN = 1;
-    private static final int MAX = 100;
+    private static final int MAX = 10_000;
 
 
     public static void main(String[] args) {
 
         IntegerArrayList list1 = generateRandomList();
-        IntegerArrayList list2 = generateRandomList();
-        IntegerArrayList list3 = generateRandomList();
+
 
         list1.bubbleSort(Comparator.naturalOrder());
         System.out.println(list1);
 
-        list2.insertionSort(Comparator.naturalOrder());
-        System.out.println(list2);
+        int index = list1.binarySearch(47, Comparator.naturalOrder());
+        System.out.println(index);
 
-        list3.selectionSort(Comparator.naturalOrder());
-        System.out.println(list3);
+        index = list1.linearSearch(0, list1.size(), 47);
+        System.out.println(index);
 
     }
 

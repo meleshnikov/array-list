@@ -139,7 +139,7 @@ public class CustomArrayList<E> implements CustomList<E> {
 
     @Override
     public boolean equals(CustomArrayList<E> otherList) {
-        boolean equal = false;
+        boolean equal;
         final int s = size;
         if (equal = (s == otherList.size())) {
             for (int i = 0; i < s; i++) {
@@ -238,10 +238,48 @@ public class CustomArrayList<E> implements CustomList<E> {
         return sb.toString();
     }
 
-//    public CustomArrayList<?> copy() {
-//        CustomArrayList<?> list = new CustomArrayList<>(size);
-//        list.data = Arrays.copyOf(data, size);
-//        list.size = size;
-//        return list;
-//    }
+    private static void rangeCheck(int arrayLength, int from, int to) {
+        if (from > to) {
+            throw new IllegalArgumentException(
+                    "fromIndex(" + from + ") > toIndex(" + to + ")");
+        }
+        if (from < 0) {
+            throw new ArrayIndexOutOfBoundsException(from);
+        }
+        if (to > arrayLength) {
+            throw new ArrayIndexOutOfBoundsException(to);
+        }
+    }
+
+    public int binarySearch(int from, int to, E key, Comparator<? super E> c) {
+        rangeCheck(size, from, to);
+        int low = from;
+        int high = to - 1;
+        while (low <= high) {
+            int mid = (high + low) >>> 1;
+            E midVal = (E) data[mid];
+            int cmp = c.compare(midVal, key);
+
+            if (cmp < 0) {
+                low = mid + 1;
+            } else if (cmp > 0) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+
+        }
+        return -(low + 1);
+    }
+
+    public int binarySearch(E key, Comparator<? super E> c) {
+        return binarySearch(0, size, key, c);
+    }
+
+    public int linearSearch(int from, int to, E key) {
+        rangeCheck(size, from, to);
+        return indexOfRange(key, from, to);
+    }
+
+
 }
